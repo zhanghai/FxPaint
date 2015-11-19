@@ -1,0 +1,137 @@
+<!--
+  ~ Copyright (c) 2015 Zhang Hai <Dreaming.in.Code.ZH@Gmail.com>
+  ~ All Rights Reserved.
+  -->
+
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="me.zhanghai.course.java.fxpaint.MainController"
+        prefWidth="640.0"
+        prefHeight="360.0">
+
+    <top><MenuBar>
+
+        <Menu text="_File">
+
+            <MenuItem
+                    accelerator="Ctrl+S"
+                    text="_Save"
+                    onAction="#onActionSave" />
+
+            <MenuItem
+                    accelerator="Alt+F4"
+                    text="E_xit"
+                    onAction="#onActionExit" />
+        </Menu>
+    </MenuBar></top>
+
+    <left><FlowPane
+            fx:id="toolPane"
+            prefWidth="64"
+            minWidth="64"
+            maxWidth="64"
+            prefWrapLength="64"
+            style="-fx-border-style: solid; -fx-border-color: lightgrey">
+
+        <fx:define>
+            <ToggleGroup fx:id="toolToggleGroup" />
+        </fx:define>
+
+        <RadioButton
+                prefWidth="32"
+                minWidth="32"
+                maxWidth="32"
+                prefHeight="32"
+                minHeight="32"
+                maxHeight="32"
+                selected="true"
+                toggleGroup="$toolToggleGroup"
+                onAction="#onLineToolSelected">
+            <graphic><Line
+                    startX="0"
+                    startY="0"
+                    endX="16"
+                    endY="16" /></graphic>
+            <tooltip><Tooltip text="Line" /></tooltip>
+        </RadioButton>
+
+        <RadioButton
+                prefWidth="32"
+                minWidth="32"
+                maxWidth="32"
+                prefHeight="32"
+                minHeight="32"
+                maxHeight="32"
+                toggleGroup="$toolToggleGroup"
+                onAction="#onRectangleToolSelected">
+            <graphic><Rectangle
+                    x="0"
+                    y="0"
+                    width="16"
+                    height="16" /></graphic>
+            <tooltip><Tooltip text="Rectangle" /></tooltip>
+        </RadioButton>
+
+        <RadioButton
+                prefWidth="32"
+                minWidth="32"
+                maxWidth="32"
+                prefHeight="32"
+                minHeight="32"
+                maxHeight="32"
+                toggleGroup="$toolToggleGroup"
+                onAction="#onEllipseToolSelected">
+            <graphic><Circle
+                    centerX="8"
+                    centerY="8"
+                    radius="8" /></graphic>
+            <tooltip><Tooltip text="Ellipse" /></tooltip>
+        </RadioButton>
+
+        <RadioButton
+                prefWidth="32"
+                minWidth="32"
+                maxWidth="32"
+                prefHeight="32"
+                minHeight="32"
+                maxHeight="32"
+                toggleGroup="$toolToggleGroup"
+                onAction="#onTextToolSelected">
+            <graphic><Text text="T">
+                <font><Font size="16" /></font>
+            </Text></graphic>
+            <tooltip><Tooltip text="Text" /></tooltip>
+        </RadioButton>
+    </FlowPane></left>
+
+    <center><Pane fx:id="canvasContainerPane">
+
+            <Pane
+                    fx:id="canvasPane"
+                    onMousePressed="#onCanvasMousePressed"
+                    onMouseDragged="#onCanvasMouseDragged"
+                    onMouseReleased="#onCanvasMouseReleased" />
+
+            <TextField
+                    fx:id="canvasTextField"
+                    alignment="TOP_LEFT"
+                    style="-fx-background-color: none; -fx-border-color: grey; -fx-padding: 0;"
+                    visible="false" />
+        </Pane></center>
+</BorderPane>
