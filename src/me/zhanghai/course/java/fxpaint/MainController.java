@@ -9,9 +9,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -29,7 +30,7 @@ public class MainController {
 
     private Stage stage;
 
-    public FlowPane toolPane;
+    public ToolBar toolPane;
     public Pane canvasContainerPane;
     public Pane canvasPane;
     public TextField canvasTextField;
@@ -37,6 +38,10 @@ public class MainController {
     private PaintTool selectedTool = lineTool;
 
     public void initialize() {
+        for (Node node : toolPane.getItems()) {
+            node.getStyleClass().remove("radio-button");
+            node.getStyleClass().add("toggle-button");
+        }
         final Rectangle clipRectangle = new Rectangle();
         canvasContainerPane.setClip(clipRectangle);
         canvasContainerPane.layoutBoundsProperty().addListener(new ChangeListener<Bounds>() {

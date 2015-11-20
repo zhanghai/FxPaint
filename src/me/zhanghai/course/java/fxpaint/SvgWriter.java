@@ -23,7 +23,9 @@ public class SvgWriter {
     private SvgWriter() {}
 
     public static void write(Region canvas, File file) throws IOException {
-        write(canvas, new BufferedWriter(new FileWriter(file)));
+        try (Writer writer = new BufferedWriter(new FileWriter(file))) {
+            write(canvas, writer);
+        }
     }
 
     public static void write(Region canvas, Writer writer) throws IOException {

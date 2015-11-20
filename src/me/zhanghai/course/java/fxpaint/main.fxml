@@ -9,23 +9,24 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Tooltip?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane
+<VBox
         xmlns:fx="http://javafx.com/fxml"
         fx:controller="me.zhanghai.course.java.fxpaint.MainController"
         prefWidth="640.0"
         prefHeight="360.0">
 
-    <top><MenuBar>
+    <MenuBar>
 
         <Menu text="_File">
 
@@ -39,88 +40,88 @@
                     text="E_xit"
                     onAction="#onActionExit" />
         </Menu>
-    </MenuBar></top>
+    </MenuBar>
 
-    <left><FlowPane
-            fx:id="toolPane"
-            prefWidth="64"
-            minWidth="64"
-            maxWidth="64"
-            prefWrapLength="64"
-            style="-fx-border-style: solid; -fx-border-color: lightgrey">
+    <HBox VBox.vgrow="ALWAYS">
 
-        <fx:define>
-            <ToggleGroup fx:id="toolToggleGroup" />
-        </fx:define>
+        <ToolBar
+                fx:id="toolPane"
+                orientation="VERTICAL">
 
-        <RadioButton
-                prefWidth="32"
-                minWidth="32"
-                maxWidth="32"
-                prefHeight="32"
-                minHeight="32"
-                maxHeight="32"
-                selected="true"
-                toggleGroup="$toolToggleGroup"
-                onAction="#onLineToolSelected">
-            <graphic><Line
-                    startX="0"
-                    startY="0"
-                    endX="16"
-                    endY="16" /></graphic>
-            <tooltip><Tooltip text="Line" /></tooltip>
-        </RadioButton>
+            <fx:define>
+                <ToggleGroup fx:id="toolToggleGroup" />
+            </fx:define>
 
-        <RadioButton
-                prefWidth="32"
-                minWidth="32"
-                maxWidth="32"
-                prefHeight="32"
-                minHeight="32"
-                maxHeight="32"
-                toggleGroup="$toolToggleGroup"
-                onAction="#onRectangleToolSelected">
-            <graphic><Rectangle
-                    x="0"
-                    y="0"
-                    width="16"
-                    height="16" /></graphic>
-            <tooltip><Tooltip text="Rectangle" /></tooltip>
-        </RadioButton>
+            <RadioButton
+                    prefWidth="32"
+                    minWidth="32"
+                    maxWidth="32"
+                    prefHeight="32"
+                    minHeight="32"
+                    maxHeight="32"
+                    selected="true"
+                    toggleGroup="$toolToggleGroup"
+                    onAction="#onLineToolSelected">
+                <graphic><Line
+                        startX="0"
+                        startY="0"
+                        endX="16"
+                        endY="16" /></graphic>
+                <tooltip><Tooltip text="Line" /></tooltip>
+            </RadioButton>
 
-        <RadioButton
-                prefWidth="32"
-                minWidth="32"
-                maxWidth="32"
-                prefHeight="32"
-                minHeight="32"
-                maxHeight="32"
-                toggleGroup="$toolToggleGroup"
-                onAction="#onEllipseToolSelected">
-            <graphic><Circle
-                    centerX="8"
-                    centerY="8"
-                    radius="8" /></graphic>
-            <tooltip><Tooltip text="Ellipse" /></tooltip>
-        </RadioButton>
+            <RadioButton
+                    prefWidth="32"
+                    minWidth="32"
+                    maxWidth="32"
+                    prefHeight="32"
+                    minHeight="32"
+                    maxHeight="32"
+                    toggleGroup="$toolToggleGroup"
+                    onAction="#onRectangleToolSelected">
+                <graphic><Rectangle
+                        x="0"
+                        y="0"
+                        width="16"
+                        height="16" /></graphic>
+                <tooltip><Tooltip text="Rectangle" /></tooltip>
+            </RadioButton>
 
-        <RadioButton
-                prefWidth="32"
-                minWidth="32"
-                maxWidth="32"
-                prefHeight="32"
-                minHeight="32"
-                maxHeight="32"
-                toggleGroup="$toolToggleGroup"
-                onAction="#onTextToolSelected">
-            <graphic><Text text="T">
-                <font><Font size="16" /></font>
-            </Text></graphic>
-            <tooltip><Tooltip text="Text" /></tooltip>
-        </RadioButton>
-    </FlowPane></left>
+            <RadioButton
+                    prefWidth="32"
+                    minWidth="32"
+                    maxWidth="32"
+                    prefHeight="32"
+                    minHeight="32"
+                    maxHeight="32"
+                    toggleGroup="$toolToggleGroup"
+                    onAction="#onEllipseToolSelected">
+                <graphic><Circle
+                        centerX="8"
+                        centerY="8"
+                        radius="8" /></graphic>
+                <tooltip><Tooltip text="Ellipse" /></tooltip>
+            </RadioButton>
 
-    <center><Pane fx:id="canvasContainerPane">
+            <RadioButton
+                    prefWidth="32"
+                    minWidth="32"
+                    maxWidth="32"
+                    prefHeight="32"
+                    minHeight="32"
+                    maxHeight="32"
+                    toggleGroup="$toolToggleGroup"
+                    onAction="#onTextToolSelected">
+                <graphic><Text text="T">
+                    <font><Font size="16" /></font>
+                </Text></graphic>
+                <tooltip><Tooltip text="Text" /></tooltip>
+            </RadioButton>
+        </ToolBar>
+
+        <Pane
+                fx:id="canvasContainerPane"
+                HBox.hgrow="ALWAYS">
 
             <Pane
                     fx:id="canvasPane"
@@ -133,5 +134,6 @@
                     alignment="TOP_LEFT"
                     style="-fx-background-color: none; -fx-border-color: grey; -fx-padding: 0;"
                     visible="false" />
-        </Pane></center>
-</BorderPane>
+        </Pane>
+    </HBox>
+</VBox>
