@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -22,15 +21,15 @@ public class PaintTools {
         private Line line;
 
         @Override
-        public void onMousePressed(MouseEvent event, Pane canvas) {
+        public void onMousePressed(MouseEvent event, PaintCanvas canvas) {
             double x = event.getX();
             double y = event.getY();
             line = new Line(x, y, x, y);
-            canvas.getChildren().add(line);
+            canvas.addShape(line);
         }
 
         @Override
-        public void onMouseDragged(MouseEvent event, Pane canvas) {
+        public void onMouseDragged(MouseEvent event, PaintCanvas canvas) {
 
             if (line == null) {
                 return;
@@ -41,7 +40,7 @@ public class PaintTools {
         }
 
         @Override
-        public void onMouseReleased(MouseEvent event, Pane canvas) {
+        public void onMouseReleased(MouseEvent event, PaintCanvas canvas) {
             onMouseDragged(event, canvas);
             onEnd();
         }
@@ -59,15 +58,15 @@ public class PaintTools {
         private Rectangle rectangle;
 
         @Override
-        public void onMousePressed(MouseEvent event, Pane canvas) {
+        public void onMousePressed(MouseEvent event, PaintCanvas canvas) {
             x = event.getX();
             y = event.getY();
             rectangle = new Rectangle(x, y, 0, 0);
-            canvas.getChildren().add(rectangle);
+            canvas.addShape(rectangle);
         }
 
         @Override
-        public void onMouseDragged(MouseEvent event, Pane canvas) {
+        public void onMouseDragged(MouseEvent event, PaintCanvas canvas) {
 
             if (rectangle == null) {
                 return;
@@ -82,7 +81,7 @@ public class PaintTools {
         }
 
         @Override
-        public void onMouseReleased(MouseEvent event, Pane canvas) {
+        public void onMouseReleased(MouseEvent event, PaintCanvas canvas) {
             onMouseDragged(event, canvas);
             onEnd();
         }
@@ -100,15 +99,15 @@ public class PaintTools {
         private Ellipse ellipse;
 
         @Override
-        public void onMousePressed(MouseEvent event, Pane canvas) {
+        public void onMousePressed(MouseEvent event, PaintCanvas canvas) {
             x = event.getX();
             y = event.getY();
             ellipse = new Ellipse(x, y, 0, 0);
-            canvas.getChildren().add(ellipse);
+            canvas.addShape(ellipse);
         }
 
         @Override
-        public void onMouseDragged(MouseEvent event, Pane canvas) {
+        public void onMouseDragged(MouseEvent event, PaintCanvas canvas) {
 
             if (ellipse == null) {
                 return;
@@ -123,7 +122,7 @@ public class PaintTools {
         }
 
         @Override
-        public void onMouseReleased(MouseEvent event, Pane canvas) {
+        public void onMouseReleased(MouseEvent event, PaintCanvas canvas) {
             onMouseDragged(event, canvas);
             onEnd();
         }
@@ -143,13 +142,13 @@ public class PaintTools {
         }
 
         @Override
-        public void onMousePressed(MouseEvent event, Pane canvas) {}
+        public void onMousePressed(MouseEvent event, PaintCanvas canvas) {}
 
         @Override
-        public void onMouseDragged(MouseEvent event, Pane canvas) {}
+        public void onMouseDragged(MouseEvent event, PaintCanvas canvas) {}
 
         @Override
-        public void onMouseReleased(MouseEvent event, final Pane canvas) {
+        public void onMouseReleased(MouseEvent event, final PaintCanvas canvas) {
 
             onEnd();
 
@@ -162,7 +161,7 @@ public class PaintTools {
                             textField.getLayoutY() + textField.getHeight(),
                             textField.getCharacters().toString());
                     text.setFont(textField.getFont());
-                    canvas.getChildren().add(text);
+                    canvas.addShape(text);
                     textField.clear();
                     textField.setVisible(false);
                 }

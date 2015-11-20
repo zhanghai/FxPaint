@@ -10,11 +10,11 @@ import javafx.scene.layout.Pane;
 
 public interface PaintTool {
 
-    void onMousePressed(MouseEvent event, Pane canvas);
+    void onMousePressed(MouseEvent event, PaintCanvas canvas);
 
-    void onMouseDragged(MouseEvent event, Pane canvas);
+    void onMouseDragged(MouseEvent event, PaintCanvas canvas);
 
-    void onMouseReleased(MouseEvent event, Pane canvas);
+    void onMouseReleased(MouseEvent event, PaintCanvas canvas);
 
     void onEnd();
 }

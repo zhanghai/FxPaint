@@ -8,40 +8,38 @@ package me.zhanghai.course.java.fxpaint;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
-import javafx.scene.Node;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
 
-public class MainController {
+public class FxPaintController implements PaintCanvas {
 
     private final PaintTools.LineTool lineTool = new PaintTools.LineTool();
     private final PaintTools.RectangleTool rectangleTool = new PaintTools.RectangleTool();
     private final PaintTools.EllipseTool ellipseTool = new PaintTools.EllipseTool();
     private final PaintTools.TextTool textTool = new PaintTools.TextTool();
 
-    private Stage stage;
-
-    public ToolBar toolPane;
     public Pane canvasContainerPane;
     public Pane canvasPane;
     public TextField canvasTextField;
 
+    private Stage stage;
+
     private PaintTool selectedTool = lineTool;
 
     public void initialize() {
-        for (Node node : toolPane.getItems()) {
-            node.getStyleClass().remove("radio-button");
-            node.getStyleClass().add("toggle-button");
-        }
+
         final Rectangle clipRectangle = new Rectangle();
         canvasContainerPane.setClip(clipRectangle);
         canvasContainerPane.layoutBoundsProperty().addListener(new ChangeListener<Bounds>() {
@@ -54,6 +52,18 @@ public class MainController {
                 canvasPane.setPrefHeight(newValue.getHeight());
             }
         });
+
+        canvasPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                // For unfocusing children.
+                if (!canvasTextField.isVisible()) {
+                    canvasPane.requestFocus();
+                }
+                event.consume();
+            }
+        });
+
         textTool.setTextField(canvasTextField);
     }
 
@@ -62,10 +72,18 @@ public class MainController {
     }
 
     public void onActionSave(ActionEvent event) {
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save file");
+        fileChooser.setInitialFileName(".svg");
+        fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter(
+                "Scalable Vector Graphics (*.svg)", "*.svg"));
         File file = fileChooser.showSaveDialog(stage);
+
         if (file != null) {
+            if (!file.getName().contains(".")) {
+                file = new File(file.getPath() + ".svg");
+            }
             try {
                 SvgWriter.write(canvasPane, file);
             } catch (IOException e) {
@@ -100,14 +118,68 @@ public class MainController {
     }
 
     public void onCanvasMousePressed(MouseEvent event) {
-        selectedTool.onMousePressed(event, canvasPane);
+        selectedTool.onMousePressed(event, this);
     }
 
     public void onCanvasMouseDragged(MouseEvent event) {
-        selectedTool.onMouseDragged(event, canvasPane);
+        selectedTool.onMouseDragged(event, this);
     }
 
     public void onCanvasMouseReleased(MouseEvent event) {
-        selectedTool.onMouseReleased(event, canvasPane);
+        selectedTool.onMouseReleased(event, this);
+    }
+
+    @Override
+    public void addShape(final Shape shape) {
+        shape.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                selectedTool.onEnd();
+                event.consume();
+            }
+        });
+        shape.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                selectedTool.onEnd();
+                event.consume();
+            }
+        });
+        shape.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                selectedTool.onEnd();
+                event.consume();
+            }
+        });
+        shape.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                shape.requestFocus();
+                event.consume();
+            }
+        });
+        shape.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+                                Boolean newValue) {
+                if (shape.getFill() != null) {
+                    shape.setFill(newValue ? Color.BLUE : Color.BLACK);
+                }
+                if (shape.getStroke() != null) {
+                    shape.setStroke(newValue ? Color.BLUE : Color.BLACK);
+                }
+            }
+        });
+        shape.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCharacter().equals("\u007F")) {
+                    canvasPane.getChildren().remove(shape);
+                }
+                event.consume();
+            }
+        });
+        canvasPane.getChildren().add(shape);
     }
 }
