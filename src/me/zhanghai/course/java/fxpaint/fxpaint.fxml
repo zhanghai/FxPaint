@@ -24,8 +24,8 @@
 <VBox
         xmlns:fx="http://javafx.com/fxml"
         fx:controller="me.zhanghai.course.java.fxpaint.FxPaintController"
-        prefWidth="640.0"
-        prefHeight="360.0">
+        prefWidth="600"
+        prefHeight="400">
 
     <MenuBar>
 
