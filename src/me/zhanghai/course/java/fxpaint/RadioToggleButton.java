@@ -5,9 +5,13 @@
 
 package me.zhanghai.course.java.fxpaint;
 
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 
+/**
+ * A {@link ToggleButton} with the behavior of {@link RadioButton} upon fired.
+ */
 public class RadioToggleButton extends ToggleButton {
 
     // As in RadioButton.

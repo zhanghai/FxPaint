@@ -9,5 +9,10 @@ import javafx.scene.shape.Shape;
 
 public interface PaintCanvas {
 
+    /**
+     * Add a {@link Shape} to the canvas.
+     *
+     * @param shape The shape.
+     */
     void addShape(Shape shape);
 }

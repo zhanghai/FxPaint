@@ -14,8 +14,14 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+/**
+ * Paint tools.
+ */
 public class PaintTools {
 
+    /**
+     * Tool for painting a line.
+     */
     public static class LineTool implements PaintTool {
 
         private Line line;
@@ -51,6 +57,9 @@ public class PaintTools {
         }
     }
 
+    /**
+     * Tool for painting a rectangle.
+     */
     public static class RectangleTool implements PaintTool {
 
         private double x;
@@ -92,6 +101,9 @@ public class PaintTools {
         }
     }
 
+    /**
+     * Tool for painting an ellipse.
+     */
     public static class EllipseTool implements PaintTool {
 
         private double x;
@@ -133,6 +145,9 @@ public class PaintTools {
         }
     }
 
+    /**
+     * Tool for painting text.
+     */
     public static class TextTool implements PaintTool {
 
         private TextField textField;

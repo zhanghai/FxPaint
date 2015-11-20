@@ -18,16 +18,33 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
+/**
+ * Writer for writing a canvas in SVG format.
+ */
 public class SvgWriter {
 
     private SvgWriter() {}
 
+    /**
+     * Write a canvas to file in SVG format.
+     *
+     * @param canvas The canvas.
+     * @param file The file.
+     * @throws IOException If writing failed.
+     */
     public static void write(Region canvas, File file) throws IOException {
         try (Writer writer = new BufferedWriter(new FileWriter(file))) {
             write(canvas, writer);
         }
     }
 
+    /**
+     * Write a canvas to writer in SVG format.
+     *
+     * @param canvas The canvas.
+     * @param writer The writer.
+     * @throws IOException If writing failed.
+     */
     public static void write(Region canvas, Writer writer) throws IOException {
 
         writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
@@ -74,6 +91,12 @@ public class SvgWriter {
                 text.getX(), text.getY(), text.getFont().getSize(), escape(text.getText())));
     }
 
+    /**
+     * Escape string for XML.
+     *
+     * @param string The string to escape.
+     * @return The escaped string.
+     */
     private static String escape(String string) {
         StringBuilder builder = new StringBuilder();
         int len = string.length();

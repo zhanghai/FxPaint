@@ -20,12 +20,14 @@ public class FxPaintApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        // Load the FXML with FXMLLoader instance so we can call FxPaintApplication.setStage().
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("fxpaint.fxml"));
         Parent mainRoot = loader.load();
         FxPaintController controller = loader.getController();
         controller.setStage(primaryStage);
 
+        // Set the scene and show the stage.
         primaryStage.setTitle("FxPaint");
         primaryStage.setScene(new Scene(mainRoot));
         primaryStage.show();

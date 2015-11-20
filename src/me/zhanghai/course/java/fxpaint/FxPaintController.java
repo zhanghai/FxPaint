@@ -40,6 +40,7 @@ public class FxPaintController implements PaintCanvas {
 
     public void initialize() {
 
+        // canvasPane won't fill its parent if we are not doing so; also clips the canvas here.
         final Rectangle clipRectangle = new Rectangle();
         canvasContainerPane.setClip(clipRectangle);
         canvasContainerPane.layoutBoundsProperty().addListener(new ChangeListener<Bounds>() {
@@ -53,10 +54,10 @@ public class FxPaintController implements PaintCanvas {
             }
         });
 
+        // Unfocus children when the canvasPane itself received a click.
         canvasPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                // For unfocusing children.
                 if (!canvasTextField.isVisible()) {
                     canvasPane.requestFocus();
                 }
@@ -81,6 +82,7 @@ public class FxPaintController implements PaintCanvas {
         File file = fileChooser.showSaveDialog(stage);
 
         if (file != null) {
+            // Add .svg extension if none.
             if (!file.getName().contains(".")) {
                 file = new File(file.getPath() + ".svg");
             }
@@ -131,6 +133,7 @@ public class FxPaintController implements PaintCanvas {
 
     @Override
     public void addShape(final Shape shape) {
+        // End tools when mouse event is received by other shapes.
         shape.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -159,6 +162,7 @@ public class FxPaintController implements PaintCanvas {
                 event.consume();
             }
         });
+        // Change shape color upon focus change.
         shape.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
@@ -171,6 +175,7 @@ public class FxPaintController implements PaintCanvas {
                 }
             }
         });
+        // Handle DEL key.
         shape.setOnKeyTyped(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -180,6 +185,7 @@ public class FxPaintController implements PaintCanvas {
                 event.consume();
             }
         });
+        // Add the shape to canvas.
         canvasPane.getChildren().add(shape);
     }
 }

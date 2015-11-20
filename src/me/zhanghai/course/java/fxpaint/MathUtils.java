@@ -9,6 +9,13 @@ public class MathUtils {
 
     private MathUtils() {}
 
+    /**
+     * Returns the mean of a double value.
+     *
+     * @param a First double.
+     * @param b Second double.
+     * @return The mean.
+     */
     public static double mean(double a, double b) {
         return (a + b) / 2;
     }
